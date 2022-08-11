@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { getDeck } from "../async/getDeck"
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import CardsContainer from "../components/CardsContainer"
 
 export default function Home() {
@@ -14,19 +14,26 @@ export default function Home() {
   }
 
   return (
-    <Box sx={{ backgroundColor: '#F3F8FB', width: '90vw', height: '100vh' }}>
+    <Box sx={{
+              backgroundColor: '#F3F8FB',
+              width: '90vw',
+              minHeight: '100vh',
+              borderRadius:'10%',
+              display:'flex',
+              margin:'auto',
+              border:'20px white double',
+            }}>
           {deckId === null ? (
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignSelf: 'center',
-                alignItems: 'center',
-                height: '100%'
+                width:'100%',
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'center',
               }}>
-              <button onClick={handleClick} style={{ backgroundColor: '#EBF1F8' }}>
-                clickme
-              </button>
+              <Button  onClick={handleClick}  sx={{ backgroundColor: '#EBF1F8',width:'240px',height:'48px' }}>
+                Start to Order Cards
+              </Button>
             </Box>
           ) : (
             <CardsContainer deckId={deckId} />

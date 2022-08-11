@@ -1,6 +1,8 @@
 import { useState, useRef,useEffect } from 'react'
 import { getCard } from '../async/getCard'
 import PokerCard from './PokerCard'
+import { Box } from '@mui/material'
+import { CardsContainerStyles } from './CardsContainerStyles'
 
 const cardsValue = {
   ACE: 0,
@@ -29,6 +31,8 @@ const CardsContainer = ({ deckId }) => {
   const hearts = useRef([])
   const spades = useRef([])
   const foundQueens = useRef(0)
+
+  const {main,cards} = CardsContainerStyles;
 
   const arrangeCards = async (myCard) => {
     if (myCard.suit === 'CLUBS') {
@@ -59,45 +63,30 @@ const CardsContainer = ({ deckId }) => {
       getCard(deckId).then((mycard) => {
         setTimeout(() => {
           arrangeCards(mycard)
-        }, 1000)
+        }, 2000)
       })
     }
   }, [allCards.length])
+
+  const mapDataToCard = (cards) =>
+    cards.map((card,i) => (
+        <PokerCard image={card.image} key={i}/>
+    ))
   return (
-    <ol>
-      <li>All Cards</li>
-      {allCards.map((item, i) => (
-        <ul key={i}>
-          <li>
-            <PokerCard image={item.image} />
-          </li>
-        </ul>
-      ))}
-      <li>Clubs</li>
-      <ul>
-        {clubs.current.map((item, i) => (
-          <li key={i}>{item.value}</li>
-        ))}
-      </ul>
-      <li>Diamonds</li>
-      <ul>
-        {diamonds.current.map((item, i) => (
-          <li key={i}>{item.value}</li>
-        ))}
-      </ul>
-      <li>Hearts</li>
-      <ul>
-        {hearts.current.map((item, i) => (
-          <li key={i}>{item.value}</li>
-        ))}
-      </ul>
-      <li>Spades</li>
-      <ul>
-        {spades.current.map((item, i) => (
-          <li key={i}>{item.value}</li>
-        ))}
-      </ul>
-    </ol>
+    <Box width="100%" sx={main} >
+      <Box sx={cards}>
+        {mapDataToCard(clubs.current)}
+      </Box>
+      <Box sx={cards}>
+        {mapDataToCard(diamonds.current)}
+      </Box>
+      <Box sx={cards}>
+        {mapDataToCard(hearts.current)}
+      </Box>
+      <Box sx={cards}>
+        {mapDataToCard(spades.current)}
+      </Box>
+    </Box>
   )
 }
 
