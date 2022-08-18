@@ -32,7 +32,6 @@ const CardsContainer = ({ deckId }) => {
   const spades = useRef([])
   const foundQueens = useRef(0)
 
-  const {main,cards} = CardsContainerStyles;
 
   const arrangeCards = async (myCard) => {
     if (myCard.suit === 'CLUBS') {
@@ -73,17 +72,26 @@ const CardsContainer = ({ deckId }) => {
         <PokerCard image={card.image} key={i}/>
     ))
   return (
-    <Box width="100%" sx={main} >
-      <Box sx={cards}>
+    <Box width="100%" sx={{display:'grid',
+     gridTemplateColumns:'repeat(2,1fr)',
+     gridTemplateRows:'repeat(2,1fr)',
+     gridTemplateAreas:`
+     'upperLeft upperRight'
+     'bottomLeft bottomRight'
+     `,
+     gap:'16px'
+
+     }}   >
+      <Box sx={{display:'flex',flexWrap:'wrap', gridArea:'upperLeft'}}>
         {mapDataToCard(clubs.current)}
       </Box>
-      <Box sx={cards}>
+      <Box sx={{display:'flex',flexWrap:'wrap',gridArea:'upperRight'}} >
         {mapDataToCard(diamonds.current)}
       </Box>
-      <Box sx={cards}>
+      <Box sx={{display:'flex',flexWrap:'wrap',gridArea:'bottomLeft'}}>
         {mapDataToCard(hearts.current)}
       </Box>
-      <Box sx={cards}>
+      <Box sx={{display:'flex',flexWrap:'wrap',gridArea:'bottomRight'}}>
         {mapDataToCard(spades.current)}
       </Box>
     </Box>
